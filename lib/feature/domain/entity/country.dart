@@ -1,4 +1,6 @@
-class Country {
+import 'package:equatable/equatable.dart';
+
+class Country extends Equatable{
   final String code;
   final String name;
   final String? emojiU;
@@ -16,6 +18,9 @@ class Country {
     this.languages,
     this.states,
   });
+
+  @override
+  List<Object?> get props => [code, name];
 }
 
 class Language {

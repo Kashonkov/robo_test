@@ -24,7 +24,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   }
 
   _loadInitial(Emitter emitter) async {
-    final countries = state.countries;
+    final countries = state.countries?.toList();
     emitter(state.setLoading(true).setCountries(null).setFilteredCountries(null).failure(null).setQuery(null));
     final result = await getItemsUseCase(EmptyUseCaseParams());
     if(result.isSuccessful) {
@@ -36,7 +36,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
 
   _filterList(String? query, Emitter emitter){
     if(query == null || query.isEmpty){
-      emitter(state.setQuery(query).setFilteredCountries(state.countries));
+      emitter(state.setQuery(query).setFilteredCountries(state.countries?.toList()));
     } else {
       final filteredCountries = state.countries!.where((element) =>
           element.name.toLowerCase().contains(query.toLowerCase())).toList();

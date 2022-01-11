@@ -5,26 +5,26 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:dime_flutter/dime_flutter.dart';
+import 'package:robo_test/core/di/core_module.dart';
 
-import 'package:robo_test/main.dart';
+import 'feature/data/repository/test_repository.dart';
+import 'feature/di/feature_mock_module.dart';
+import 'feature/presentation/test_list_bloc.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testRepository();
+  testListBloc();
+}
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+initSuccessDime() {
+  dimeInstall(CoreDimeModule());
+  dimeInstall(FeatureSuccessDataSourceModule());
+  dimeInstall(FeatureMockDimeModule());
+}
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+initFailureDime() {
+  dimeInstall(CoreDimeModule());
+  dimeInstall(FeatureFailureDataSourceModule());
+  dimeInstall(FeatureMockDimeModule());
 }

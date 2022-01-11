@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 mixin DefState<S> {
   S rebuild(Function(dynamic) updates);
 
@@ -5,14 +7,14 @@ mixin DefState<S> {
 
   bool get isError => error?.errorMessage.isNotEmpty ?? false;
 
-  StateError? get error;
+  BlocStateError? get error;
 
   S setLoading(bool isLoading) {
     return rebuild((b) => (b)..isLoading = isLoading);
   }
 
   S failure(String? message) {
-    return rebuild((b) => (b)..error = message != null? StateError(message) : null);
+    return rebuild((b) => (b)..error = message != null? BlocStateError(message) : null);
   }
 
   S invalidateErrorMessage() {
@@ -20,8 +22,11 @@ mixin DefState<S> {
   }
 }
 
-class StateError{
+class BlocStateError extends Equatable{
   final String errorMessage;
 
-  StateError(this.errorMessage);
+  const BlocStateError(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
 }
