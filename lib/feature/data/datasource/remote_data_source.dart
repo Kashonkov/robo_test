@@ -20,6 +20,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         countries {
           code
           name
+          emojiU
+          languages{
+            name
+          }
+          capital
+          currency
+          states{
+            name
+          }
         }
       }
     ''';
